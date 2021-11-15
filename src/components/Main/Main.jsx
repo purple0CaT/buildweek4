@@ -1,10 +1,7 @@
-<<<<<<< Updated upstream
-=======
 import { Row, Col, Container, Button } from "react-bootstrap";
 import "./sidebar-style.css";
 import { FiArrowLeft } from "react-icons/fi";
 
->>>>>>> Stashed changes
 const Main = () => {
   const showProfile = () => {
     console.log("profile");
