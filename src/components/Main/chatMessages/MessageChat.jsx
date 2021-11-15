@@ -1,11 +1,14 @@
 import dateFormat from "dateformat";
 import Picker from "emoji-picker-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  BsEmojiSmile, BsEmojiSmileUpsideDown, BsThreeDotsVertical
+  BsEmojiSmile,
+  BsEmojiSmileUpsideDown,
+  BsThreeDotsVertical,
 } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import PictureModal from "./Picture";
 import "./style.css";
@@ -13,6 +16,7 @@ import "./style.css";
 function MessageChat({ match }) {
   const [Message, setMessage] = useState("");
   const [ShowEmoji, setShowEmoji] = useState(false);
+  const user = useSelector((state) => state.userInfo);
   //
   const sendMessage = () => {
     alert(Message);
@@ -36,12 +40,181 @@ function MessageChat({ match }) {
       message: "Hi there!",
       createdAt: new Date(),
     },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 123321,
+      name: "John",
+      message: "Hello there!",
+      createdAt: new Date(),
+    },
+    {
+      _id: 1,
+      name: "Me",
+      message: "Hi there!",
+      createdAt: new Date(),
+    },
   ];
-  useEffect(() => {
-    console.log(match.params.id);
-  }, []);
+  // useEffect(() => {
+  //   console.log(match.params.id);
+  //   console.log(user);
+  // }, []);
   return (
-    <div className="d-flex flex-column message-chat h-100">
+    <div className="d-flex flex-column message-chat">
       <div className="chat-profile d-flex justify-content-between">
         {/* TOP */}
         <div className="d-flex">
@@ -75,20 +248,22 @@ function MessageChat({ match }) {
         </div>
       </div>
       {/* CHAT SECTION */}
-      <div className="d-flex flex-column h-100 messages p-2">
-        {/* Message */}
-        {MessTest.map((m) => (
-          <div
-            className={`messageStyle my-1 ${
-              m._id.toString() === match.params.id.toString() && "ml-auto"
-            }`}
-          >
-            <span className="mr-1">{m.message}</span>
-            <small className="ml-auto text-muted">
-              {dateFormat(m.createdAt, "HH:MM")}
-            </small>
-          </div>
-        ))}
+      <div className="d-flex flex-column">
+        <div className="messages p-2">
+          {/* Message */}
+          {MessTest.map((m) => (
+            <div
+              className={`messageStyle my-1 ${
+                m._id.toString() === user._id.toString() && "ml-auto"
+              }`}
+            >
+              <span className="mr-1">{m.message}</span>
+              <small className="ml-auto text-muted">
+                {dateFormat(m.createdAt, "HH:MM")}
+              </small>
+            </div>
+          ))}
+        </div>
       </div>
       {/* SEND SECTION */}
       <div className="mt-auto d-flex justify-content-between sendmessage">
@@ -97,6 +272,7 @@ function MessageChat({ match }) {
             <BsEmojiSmile
               size="1.4rem"
               onClick={() => setShowEmoji(!ShowEmoji)}
+              style={{ cursor: "pointer" }}
             />
           ) : (
             <BsEmojiSmileUpsideDown

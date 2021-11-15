@@ -9,7 +9,7 @@ const Main = () => {
           <Row>Person</Row>
           <Row>Chats</Row>
         </Col>
-        <Col xs={8}>
+        <Col xs={8} >
           <MessageChat />
         </Col>
       </Row>

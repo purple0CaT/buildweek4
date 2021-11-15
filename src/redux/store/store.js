@@ -11,7 +11,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
   userInfo: {
-    _id: "",
+    _id: "1",
     name: "",
     email: "",
     avatar: "",
