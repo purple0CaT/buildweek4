@@ -1,18 +1,17 @@
-<<<<<<< HEAD
 import { Col, Container, Row } from "react-bootstrap";
-=======
-import { Row, Col, Container } from "react-bootstrap";
->>>>>>> main
+import MessageChat from "./chatMessages/MessageChat";
 
 const Main = () => {
   return (
-    <Container>
-      <Row>
+    <Container className="h-100">
+      <Row className="h-100">
         <Col xs={4}>
-          <Row></Row>
-          <Row></Row>
+          <Row>Person</Row>
+          <Row>Chats</Row>
         </Col>
-        <Col xs={8}></Col>
+        <Col xs={8}>
+          <MessageChat />
+        </Col>
       </Row>
     </Container>
   );
