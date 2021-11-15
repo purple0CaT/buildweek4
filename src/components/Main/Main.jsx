@@ -1,4 +1,5 @@
 import { Row, Col, Container } from "react-bootstrap";
+import ChatList from "./ChatList";
 
 const Main = () => {
   return (
@@ -6,7 +7,7 @@ const Main = () => {
       <Row>
         <Col xs={4}>
           <Row></Row>
-          <Row></Row>
+          <Row><ChatList/></Row>
         </Col>
         <Col xs={8}></Col>
       </Row>
