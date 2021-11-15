@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Col, Container, Row } from "react-bootstrap";
+=======
+import { Row, Col, Container } from "react-bootstrap";
+>>>>>>> main
 
 const Main = () => {
   return (
