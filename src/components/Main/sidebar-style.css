@@ -1,0 +1,86 @@
+.sidebar-bt {
+  width: 100%;
+  color: white;
+  margin-left: 0;
+  position: relative;
+  left: -700px;
+  z-index: 10;
+}
+
+.profile-open {
+  left: 0px;
+}
+
+.sidebar-bt,
+.profile-open {
+  -webkit-transition: left 0.4s ease;
+  -moz-transition: left 0.4s ease;
+  transition: left 0.4s ease;
+}
+
+.bg-1 {
+  background-color: #323739;
+  /* color: white; */
+  height: 15vh;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.bg-2 {
+  background-color: #131c21;
+  /* color: white; */
+  height: 85vh;
+}
+
+.bg-2 div {
+  padding: 12px;
+}
+
+.input {
+  box-shadow: 1px 2px #080c0e;
+}
+
+.profile {
+  font-size: 17px;
+  position: absolute;
+  bottom: 20px;
+}
+
+.pic {
+  margin-top: 20px;
+}
+
+.picIm {
+  border-radius: 50%;
+  max-width: 1%;
+  height: auto;
+}
+
+.pic-height {
+  max-width: 100%;
+}
+
+.picIm,
+.pic-height {
+  animation-delay: 2s;
+  -webkit-transition: max-width 0.1s ease 0.3s;
+  -moz-transition: max-width 0.1s ease 0.3s;
+  transition: max-width 0.1s ease 0.3s;
+}
+
+.input-heading {
+  color: green;
+}
+
+.formStyle {
+  background-color: #131c21;
+  padding: 5px;
+  color: white;
+  border-radius: 5%;
+  border: none;
+  box-shadow: 1px 2px #080c0e;
+}
+
+.arrow {
+  cursor: pointer;
+}
