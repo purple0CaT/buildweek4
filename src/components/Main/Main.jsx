@@ -1,4 +1,4 @@
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Container, Button, Image } from "react-bootstrap";
 import "./sidebar-style.css";
 import { FiArrowLeft } from "react-icons/fi";
 
