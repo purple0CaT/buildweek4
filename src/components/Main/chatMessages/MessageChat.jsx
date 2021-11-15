@@ -1,6 +1,9 @@
 import dateFormat from "dateformat";
+import Picker from "emoji-picker-react";
 import React, { useEffect, useState } from "react";
-import { BsEmojiSmile, BsThreeDotsVertical } from "react-icons/bs";
+import {
+  BsEmojiSmile, BsEmojiSmileUpsideDown, BsThreeDotsVertical
+} from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import { withRouter } from "react-router";
@@ -9,9 +12,15 @@ import "./style.css";
 
 function MessageChat({ match }) {
   const [Message, setMessage] = useState("");
+  const [ShowEmoji, setShowEmoji] = useState(false);
   //
   const sendMessage = () => {
     alert(Message);
+    setMessage("");
+  };
+  const onEmojiClick = (event, emojiObject) => {
+    console.log(emojiObject);
+    setMessage(Message + emojiObject.emoji);
   };
   // to DELETE
   const MessTest = [
@@ -59,7 +68,6 @@ function MessageChat({ match }) {
         <div className="d-flex align-items-center">
           <div className="mx-1">
             <PictureModal />
-            {/* <input name="myFile" type="file" /> */}
           </div>
           <div className="mx-1">
             <BsThreeDotsVertical size="1.4rem" style={{ cursor: "pointer" }} />
@@ -84,8 +92,26 @@ function MessageChat({ match }) {
       </div>
       {/* SEND SECTION */}
       <div className="mt-auto d-flex justify-content-between sendmessage">
-        <div>
-          <BsEmojiSmile size="1.4rem" />
+        <div className="position-relative">
+          {!ShowEmoji ? (
+            <BsEmojiSmile
+              size="1.4rem"
+              onClick={() => setShowEmoji(!ShowEmoji)}
+            />
+          ) : (
+            <BsEmojiSmileUpsideDown
+              size="1.4rem"
+              onClick={() => setShowEmoji(!ShowEmoji)}
+            />
+          )}
+          {ShowEmoji && (
+            <div
+              className="emojiBoard"
+              onMouseLeave={() => setShowEmoji(false)}
+            >
+              <Picker onEmojiClick={onEmojiClick} />
+            </div>
+          )}
         </div>
         <div className="w-75">
           <input
