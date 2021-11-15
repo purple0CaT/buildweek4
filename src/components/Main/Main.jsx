@@ -1,3 +1,4 @@
+
 import {
   Row,
   Col,
@@ -10,6 +11,7 @@ import "./sidebar-style.css";
 import { FiArrowLeft } from "react-icons/fi";
 import { FaPen } from "react-icons/fa";
 import image from "../../data/Capture1.PNG";
+
 
 const Main = () => {
   // const profileSidebar = ;
@@ -71,7 +73,9 @@ const Main = () => {
               </Row>
             </Col>
           </Row>
-          <Row></Row>
+
+          <Row><ChatList/></Row>
+
         </Col>
         <Col xs={8}>
           <Button onClick={() => showProfile()}> SHOW</Button>
