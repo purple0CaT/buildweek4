@@ -1,0 +1,53 @@
+.message-chat {
+  /* background-color: rgba(24, 128, 128, 0.377); */
+  height: 100%;
+}
+.sendmessage {
+  background-color: #f1efed;
+  padding: 0.6rem 1rem;
+}
+.sendmessage input {
+  border-radius: 10px !important;
+  border: 1px solid rgb(173, 173, 173);
+}
+/* .sendmessage input:focus,
+.sendmessage input:active {
+  border: 1px solid red !important; 
+   box-shadow: 0 0 0; 
+} 
+*/
+.messages {
+  background-color: #e4dcd8;
+  max-height: calc(100vh - 6.2rem + 1px);
+  overflow-y: scroll !important;
+}
+.chat-profile {
+  padding: 0.4rem 1rem;
+  background-color: #eeeeee;
+}
+.messageStyle {
+  position: relative;
+  background-color: white;
+  max-width: 50%;
+  border-radius: 10px;
+  padding: 0.2rem 0.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* .messageStyle::after {
+  content: " ";
+  position: absolute;
+  border-left: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-top: 5px solid transparent;
+  top: 0;
+  left: -5px;
+  background-color: white;
+} */
+
+.emojiBoard {
+  position: absolute !important;
+  bottom: 120%;
+  left: -1rem;
+}

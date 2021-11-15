@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 import {
   Row,
@@ -12,6 +13,10 @@ import { FiArrowLeft } from "react-icons/fi";
 import { FaPen } from "react-icons/fa";
 import image from "../../data/Capture1.PNG";
 
+=======
+import { Col, Container, Row } from "react-bootstrap";
+import MessageChat from "./chatMessages/MessageChat";
+>>>>>>> messageChat
 
 const Main = () => {
   // const profileSidebar = ;
@@ -33,9 +38,10 @@ const Main = () => {
   };
 
   return (
-    <Container>
-      <Row>
+    <Container className="h-100">
+      <Row className="h-100">
         <Col xs={4}>
+<<<<<<< HEAD
           {/* <Button onclick={showProfile}> SHOW</Button> */}
           <Row className="sidebar-bt profile-container">
             <Col>
@@ -79,6 +85,13 @@ const Main = () => {
         </Col>
         <Col xs={8}>
           <Button onClick={() => showProfile()}> SHOW</Button>
+=======
+          <Row>Person</Row>
+          <Row>Chats</Row>
+        </Col>
+        <Col xs={8} >
+          <MessageChat />
+>>>>>>> messageChat
         </Col>
       </Row>
     </Container>
