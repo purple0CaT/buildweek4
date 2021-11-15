@@ -1,0 +1,25 @@
+.sidebar-bt {
+  width: 100%;
+  color: white;
+  margin-left: 0;
+}
+
+.bg-1 {
+  background-color: #323739;
+  /* color: white; */
+  height: 15vh;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.bg-2 {
+  background-color: #131c21;
+  /* color: white; */
+  height: 85vh;
+}
+
+.profile {
+  font-size: 17px;
+  position: absolute;
+  bottom: 20px;
+}
