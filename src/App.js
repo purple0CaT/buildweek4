@@ -6,11 +6,13 @@ import Main from "./components/Main/Main";
 
 function App() {
   return (
-    <div>
-      <Route path="/Login" exact component={Login} />
-      <Route path="/Register" exact component={Register} />
-      <Route path="/Main/:id" component={Main} />
-    </div>
+    <Router>
+      <div className="App">
+        <Route path="/Login" exact component={Login} />
+        <Route path="/Register" exact component={Register} />
+        <Route path="/Main/:id" component={Main} />
+      </div>
+    </Router>
   );
 }
 

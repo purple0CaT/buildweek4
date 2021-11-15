@@ -1,3 +1,5 @@
+import { Row, Col, Container } from "react-bootstrap";
+
 const Main = () => {
   return (
     <Container>
