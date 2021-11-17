@@ -4,6 +4,7 @@ import image from "../../data/Capture1.PNG";
 import MessageChat from "./chatMessages/MessageChat";
 import "./sidebar-style.css";
 import ChatList from "./ChatList";
+import { useEffect } from "react";
 
 const Main = () => {
   // const profileSidebar = ;
@@ -23,6 +24,13 @@ const Main = () => {
       .classList.remove("profile-open");
     document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
   };
+
+  useEffect(() => {
+
+    socket.on('connect', () => {
+      socket.emit(`loggedin`, {newUser})
+      console.log(`Connection ${}!`)
+    })
 
   return (
     <Container fluid className="h-100">
