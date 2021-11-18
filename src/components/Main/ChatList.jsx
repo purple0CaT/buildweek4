@@ -2,35 +2,30 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import io from "socket.io-client";
-import tempChatExample from './tempChatExample.json'
+import tempChatExample from './tempChatExample.json' // CHAT OBJECTS EXAMPLE
+import { setActiveChat } from "../../redux/actions/action.js";
 
-// *********************** CHAT SHAPE ******************************
-/*
-{
-    '_id':'chatID',
-    'members':[{
-        '_id':'memberID',
-        'username':'Lollo Petronio',
-        'email':'petronio@gmail.com',
-        'avatar':'https://via.placeholder.com/300.png/09f'
-    }],
-    'history':[{
-        '_id':'historyElementID',
-        'timestamp':'today',
-        'sender':'Lollo',
-        'content':{
-            'text':'HI MARCO HOW R U',
-            'media':''  
-        } 
-            }]
-        }
-        */
-// ******************************************************************
-const mapStateToProps = (state) => ({
+const mapStateToProps=(state)=>({
   chats: state.chats.list,
 });
+const mapDispatchToProps=(dispatch)=>(
+  {
+    selectChat:(id)=>{
+      dispatch(setActiveChat(id))
+  }
+})
+// const mapDispatchToProps = (dispatch) => ({
+//   // selectChat: (value) => {
+//   //   dispatch(setActiveChat(value))
+//   //   console.log('HERE')
+//   // }
+//   selectChat: (id) =>
+//   dispatch({
+//     type: 'SET_ACTIVE_CHAT',
+//   })
+// })
 
-const ChatList = () => {
+const ChatList = ({selectChat}) => {
 
   // const [users, setUsers] = useState();
   // const socket = io.connect('http://localhost:3003/chats')
@@ -52,11 +47,6 @@ const ChatList = () => {
 	// 		return usersCopy;
 	// 	});
 	// };
-
-
-
-    
-
 
   /*
   const getChats=async()=>{
@@ -93,8 +83,8 @@ const ChatList = () => {
   }
   useEffect(() => {
     // socket.on("fetch_response", fetchMessageResponse);
-    console.log('HERE: ',tempChatExample)
     //getChats()
+    //console.log('HERE: ',tempChatExample)
     getFakeChats()
   },[]);//socket
 
@@ -107,7 +97,10 @@ const ChatList = () => {
       <h1>Chat List</h1>
       {chats &&
         chats.map((chat) => (
-          <Row key={chat._id}>
+          <Row
+          key={chat._id}
+          onClick={()=>selectChat(chat._id)}
+          >
             <Col xs={2}>
               {chat.members.length === 1 ? (
                 <img
@@ -146,4 +139,4 @@ const ChatList = () => {
   );
 };
 
-export default connect(mapStateToProps)(ChatList);
+export default connect(mapStateToProps,mapDispatchToProps)(ChatList);
