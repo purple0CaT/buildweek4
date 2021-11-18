@@ -5,7 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import {
   BsEmojiSmile,
   BsEmojiSmileUpsideDown,
-  BsThreeDotsVertical
+  BsThreeDotsVertical,
 } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
@@ -49,17 +49,7 @@ function MessageChat() {
     });
     setMessage("");
   };
-  // PIng sound
-  const pingIt = () => {
-    const sound = new Audio("../../../../public/ping_sound.mp3");
-    sound.load();
-    sound
-      .play()
-      .then(() => {})
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
   // SOCKET IO
   useEffect(() => {
     socket.on("connect", () => {
@@ -69,10 +59,12 @@ function MessageChat() {
       // pingIt();
       dispatch(setActiveChat(messages));
     });
-    socket.on("join", (message) => {
-      console.log(message);
-    });
-    console.log(chatMembers);
+    // socket.on("ping", (val) => {
+    //   console.log("Ping!");
+    //   // setTimeout(() => {
+    //   // pingIt();
+    //   // }, 100);
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -164,7 +156,7 @@ function MessageChat() {
         <Col xs="9" className="w-100">
           <input
             type="text"
-            className="w-100"
+            className="w-100 px-2"
             value={Message}
             onKeyUp={(e) => {
               if (e.key === "Enter") sendMessage();
