@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
+import io from "socket.io-client";
+import tempChatExample from './tempChatExample.json'
 
 // *********************** CHAT SHAPE ******************************
 /*
@@ -29,12 +31,72 @@ const mapStateToProps = (state) => ({
 });
 
 const ChatList = () => {
+
+  // const [users, setUsers] = useState();
+  // const socket = io.connect('http://localhost:3003/chats')
+	// const fetchMessageResponse = (data) => {
+	// 	setUsers((users) => {
+	// 		const { userId, response } = data;
+
+	// 		let userIndex = users.findIndex((user) => user.id === userId);
+	// 		const usersCopy = JSON.parse(JSON.stringify(users));
+	// 		const newMsgObject = {
+	// 			content: response,
+	// 			sender: userId,
+	// 			time: new Date().toLocaleTimeString(),
+	// 			status: null,
+	// 		};
+
+	// 		usersCopy[userIndex].messages.TODAY.push(newMsgObject);
+
+	// 		return usersCopy;
+	// 	});
+	// };
+
+
+
+    
+
+
+  /*
+  const getChats=async()=>{
+    try {
+      const chatsResp=await fetch('http://localhost:3003/chats',{
+        method:'GET',
+        headers:{
+          // 'Accept': 'application/json', // This is set on request
+          // 'Content-Type': 'application/json', // This is set on request
+          // //'X-CSRF-Token': 'abcdefghijklmnop', // This is set on request
+          // 'Cache': 'no-cache', // This is set on request
+          // credentials: 'same-origin', // This is set on request
+          // withCredentials: true,
+          // credentials:'Access-Control-Allow-Origin',
+          //credentials:'same-origin',
+          //'accessToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzcyMzUyMDMsImV4cCI6MTYzNzMyMTYwM30.Y01rcv0yoEORn6S-DsyALgiZfsZVfnJaYXnB92P23sg' // This is missing from request
+          cookie:'accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzcyMzUyMDMsImV4cCI6MTYzNzMyMTYwM30.Y01rcv0yoEORn6S-DsyALgiZfsZVfnJaYXnB92P23sg'
+        }
+      })
+      if(chatsResp.ok){
+        let chatsData=await chatsResp.json()
+        console.log('CHATS DATA FROM FETCH: ',chatsData)
+        setChats(chatsData)
+      }
+    } catch (error) {
+      
+    }
+  }
+*/
   // STATE FOR TESTING
   const [chats, setChats] = useState();
-
+  const getFakeChats=()=>{
+    setChats(tempChatExample)
+  }
   useEffect(() => {
-    console.log(chats);
-  });
+    // socket.on("fetch_response", fetchMessageResponse);
+    console.log('HERE: ',tempChatExample)
+    //getChats()
+    getFakeChats()
+  },[]);//socket
 
   // STARTING BY SINGLE-USER CHAT (NOT GROUP CHAT ALLOWED FOR NOW)
   return (
