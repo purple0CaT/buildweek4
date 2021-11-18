@@ -11,11 +11,7 @@ const Main = () => {
   const profile = useSelector((state) => state.userInfo);
   const stockImage =
     "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png";
-  // const [profile, setProfile] = useState({});
-  // const [imageUploaded, setimageUploaded] = useState(false);
-  // const [imageFile, setimageFile] = useState(
-  //   "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png"
-  // );
+
   const [imageFile, setimageFile] = useState(stockImage);
 
   const showProfile = () => {
