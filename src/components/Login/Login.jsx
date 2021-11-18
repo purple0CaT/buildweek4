@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { setUserInfo } from "../../redux/actions/action.js";
+import { setChats, setUserInfo } from "../../redux/actions/action.js";
 import { withRouter } from "react-router-dom";
 
 //const user = useSelector((state) => state.userInfo);
@@ -26,16 +26,43 @@ import { withRouter } from "react-router-dom";
 
 const Login = ({ history }) => {
   // const user = useSelector((state) => state.userInfo)
-  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
+  const login = async () => {
+    const obj = { email, password };
+    try {
+      let response = await fetch(`http://localhost:3003/users/session`, {
+        method: "POST",
+        body: JSON.stringify(obj),
+        credentials: "same-origin",
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response);
+      console.log(JSON.stringify(obj));
+      let data = await response.json();
+      if (response.ok) {
+        dispatch(setUserInfo(data.user.user));
+        dispatch(setChats(data.user.chats));
+        history.push("/main/userID");
+      } else {
+        console.log("Not groovy");
+      }
+    } catch (error) {
+      console.log("Not fergilicious");
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hello world");
-    const userObject = { username, password };
-    dispatch(setUserInfo(userObject));
-    console.log(userObject);
+    login();
+
+    // console.log("hello world");
+    // const userObject = { username, password };
+    // dispatch(setUserInfo(userObject));
+    // console.log(userObject);
   };
 
   return (
@@ -45,7 +72,8 @@ const Login = ({ history }) => {
         <FormControl
           aria-label="Example text with button addon"
           aria-describedby="basic-addon1"
-          onKeyUp={(e) => setUserName(e.target.value)}
+          // value="Paul@hotmail.com"
+          onKeyUp={(e) => setEmail(e.target.value)}
         />
         <div>Password</div>
         <FormControl

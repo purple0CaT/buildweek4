@@ -5,9 +5,12 @@ import MessageChat from "./chatMessages/MessageChat";
 import "./sidebar-style.css";
 import ChatList from "./ChatList";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const Main = () => {
-  const [profile, setProfile] = useState({});
+  const profile = useSelector((state) => state.userInfo);
+
+  // const [profile, setProfile] = useState({});
   const [imageUploaded, setimageUploaded] = useState(false);
   const [imageFile, setimageFile] = useState(
     "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png"
@@ -32,31 +35,32 @@ const Main = () => {
     document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
   };
 
-  const getMyProfile = async () => {
-    try {
-      let response = await fetch(`http://localhost:3003/users/me`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg`,
-          cookie: `accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzgzNDQyMH0.0vnJrJBd-QMKCkeJbgFDNQ6nFrarMI1PpE3w9dAX_iI`,
-        },
-      });
-      let myProfile = await response.json();
-      setProfile(myProfile);
-      console.log(profile);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getMyProfile = async () => {
+  //   try {
+  //     let response = await fetch(`http://localhost:3003/users/me`, {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg`,
+  //         cookie: `accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzgzNDQyMH0.0vnJrJBd-QMKCkeJbgFDNQ6nFrarMI1PpE3w9dAX_iI`,
+  //       },
+  //     });
+  //     let myProfile = await response.json();
+  //     setProfile(myProfile);
+  //     console.log(profile);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const uploadImage = async () => {
     const formData = new FormData();
-    formData.append("image", imageFile);
+    formData.append("avatar", imageFile);
     console.log(formData);
     try {
       let response = await fetch(`http://localhost:3003/users/me/avatar`, {
         method: "POST",
         body: formData,
+        credentials: "same-origin",
         headers: {
           Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg`,
           cookie: `accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzgzNDQyMH0.0vnJrJBd-QMKCkeJbgFDNQ6nFrarMI1PpE3w9dAX_iI`,
@@ -78,7 +82,7 @@ const Main = () => {
   //   });
   // });
 
-  useEffect(() => getMyProfile(), []);
+  // useEffect(() => getMyProfile(), []);
 
   return (
     <Container fluid className="h-100">
@@ -103,7 +107,7 @@ const Main = () => {
                   {imageUploaded ? (
                     // <Image src={imageFile} fluid />
                     // <img className="picIm" src={profile.image} alt="" />
-                    <img className="picIm" src={imageFile} alt="" />
+                    <img className="picIm" src={profile.avatar} alt="" />
                   ) : (
                     <div className="text-center m-auto">
                       <div className="m-auto imageuploadtext text-primary px-2 pt-1">
@@ -125,7 +129,7 @@ const Main = () => {
                         />
                       </div>
                       {/* <img className="picIm" src={profile.image} alt="" /> */}
-                      <img className="picIm" src={imageFile} alt="" />
+                      <img className="picIm" src={profile.avatar} alt="" />
                     </div>
                   )}
                 </div>
@@ -133,7 +137,7 @@ const Main = () => {
                 <div className="input-heading">Your name</div>
                 <input
                   className="formStyle"
-                  value={profile.username}
+                  value={profile.name}
                   aria-describedby="basic-addon1"
                 />
                 <div className="text-muted">
