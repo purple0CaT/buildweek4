@@ -1,6 +1,6 @@
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FiArrowLeft } from "react-icons/fi";
-import image from "../../data/Capture1.PNG";
+// import image from "../../data/Capture1.PNG";
 import MessageChat from "./chatMessages/MessageChat";
 import "./sidebar-style.css";
 import ChatList from "./ChatList";
@@ -25,12 +25,12 @@ const Main = () => {
     document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
   };
 
-  useEffect(() => {
-
-    socket.on('connect', () => {
-      socket.emit(`loggedin`, {newUser})
-      console.log(`Connection ${}!`)
-    })
+  // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     socket.emit(`loggedin`, { newUser });
+  //     console.log(`Connection ${newUser}!`);
+  //   });
+  // });
 
   return (
     <Container fluid className="h-100">
@@ -51,7 +51,7 @@ const Main = () => {
               </Row>
               <Row className="bg-2 px-3 d-flex flex-column">
                 <div className="mx-auto pic">
-                  <img className="picIm" src={image} alt="" />
+                  {/* <img className="picIm" src={image} alt="" /> */}
                 </div>
 
                 <div className="input-heading">Your name</div>
