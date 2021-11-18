@@ -1,11 +1,11 @@
-import { Button, Col, Container, Row, Image } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { FiArrowLeft } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import ChatList from "./ChatList";
 // import image from "../../data/Capture1.PNG";
 import MessageChat from "./chatMessages/MessageChat";
 import "./sidebar-style.css";
-import ChatList from "./ChatList";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 const Main = () => {
   const profile = useSelector((state) => state.userInfo);

@@ -1,18 +1,12 @@
-import {
-  InputGroup,
-  Button,
-  FormControl,
-  DropdownButton,
-  Dropdown,
-  FormGroup,
-  Form,
-} from "react-bootstrap";
-// import './Login.css'
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
+import {
+  Button,
+  FormControl, InputGroup
+} from "react-bootstrap";
+import { useDispatch } from "react-redux";
+// import './Login.css'
+import { Link, withRouter } from "react-router-dom";
 import { setChats, setUserInfo } from "../../redux/actions/action.js";
-import { withRouter } from "react-router-dom";
 
 //const user = useSelector((state) => state.userInfo);
 

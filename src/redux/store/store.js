@@ -1,11 +1,11 @@
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import { persistStore, persistReducer } from "redux-persist";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
+import { persistReducer, persistStore } from "redux-persist";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import localStorage from "redux-persist/es/storage";
-import { userReducer } from "../reducer/user";
+import thunk from "redux-thunk";
 import { chatsReducer } from "../reducer/chat";
 import { socketReducer } from "../reducer/socket";
+import { userReducer } from "../reducer/user";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

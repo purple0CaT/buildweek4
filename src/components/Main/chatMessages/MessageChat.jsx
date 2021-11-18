@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   BsEmojiSmile,
   BsEmojiSmileUpsideDown,
-  BsThreeDotsVertical,
+  BsThreeDotsVertical
 } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";

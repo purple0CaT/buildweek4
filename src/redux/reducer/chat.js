@@ -1,5 +1,4 @@
-import { SET_ACTIVE_CHAT } from "../actions/action";
-import { SET_CHATS } from "../actions/action";
+import { SET_ACTIVE_CHAT, SET_CHATS } from "../actions/action";
 import { initialState } from "../store/store";
 //
 export const chatsReducer = (state = initialState.chats, action) => {
