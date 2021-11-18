@@ -38,16 +38,17 @@ const Login = ({ history }) => {
         body: JSON.stringify(obj),
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
+        // Set-Cookie: true
       });
       console.log(response);
-      console.log(response.headers.set("set-cookie"));
+      console.log(response.headers.get("set-cookie"));
 
       console.log(JSON.stringify(obj));
       let data = await response.json();
       if (response.ok) {
         dispatch(setUserInfo(data.user.user));
         dispatch(setChats(data.user.chats));
-        history.push("/main/userID");
+        history.push(`/main/${data.user.user._id}`);
       } else {
         console.log("Not groovy");
       }
