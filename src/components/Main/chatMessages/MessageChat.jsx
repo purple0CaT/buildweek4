@@ -1,10 +1,10 @@
 import dateFormat from "dateformat";
 import Picker from "emoji-picker-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   BsEmojiSmile,
   BsEmojiSmileUpsideDown,
-  BsThreeDotsVertical
+  BsThreeDotsVertical,
 } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
@@ -43,39 +43,33 @@ function MessageChat() {
   const dispatch = useDispatch();
   //
   const onEmojiClick = (event, emojiObject) => {
-    console.log(emojiObject);
     setMessage(Message + emojiObject.emoji);
   };
+  //
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(scrollToBottom, [activeChat.history]);
+
   //
   const sendMessage = () => {
     // alert(Message);
     socket.emit("sendmessage", {
       message: Message,
-      img: "",
+      media: "",
       room: activeChat._id,
     });
     setMessage("");
   };
-  //
+  // SOCKET IO
   useEffect(() => {
-    // console.log("Test!");
-    // console.log(document.cookie);
     socket.on("connect", () => {
       console.log("connect");
     });
     socket.on("message", (messages) => {
-      // alert(message.content.text);
-      // console.log(messages);
       dispatch(setActiveHistory(messages.history));
     });
-    // socket.on("loggedin", () => {
-    //   alert("U are loggedIn!");
-    //   setLogged(true);
-    //   fetchUsers();
-    //   socket.on("newConnection", () => {
-    //     fetchUsers();
-    //   });
-    // });
     socket.on("join", (message) => {
       console.log(message);
     });
@@ -87,23 +81,28 @@ function MessageChat() {
         {/* TOP */}
         <div className="d-flex">
           {/* left side */}
-          <div>
-            <img
-              src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
-              alt=""
-              style={{
-                width: "40px",
-                aspectRatio: "1/1",
-                objectFit: "cover",
-                borderRadius: "50%",
-                marginRight: "1rem",
-              }}
-            />
-          </div>
-          <div className="d-flex flex-column">
-            <h6 className="m-0">Name</h6>
-            <small>Online/Typing</small>
-          </div>
+          {activeChat &&
+            activeChat.members.map((Chat) => (
+              <>
+                <div>
+                  <img
+                    src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                    alt=""
+                    style={{
+                      width: "40px",
+                      aspectRatio: "1/1",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                      marginRight: "1rem",
+                    }}
+                  />
+                </div>
+                <div className="d-flex flex-column">
+                  <h6 className="m-0">Name</h6>
+                  <small>Online/Typing</small>
+                </div>
+              </>
+            ))}
         </div>
         {/* right side */}
         <div className="d-flex align-items-center">
@@ -122,7 +121,7 @@ function MessageChat() {
         {activeChat.history.map((m) => (
           <div
             className={`messageStyle my-1 ${
-              m.sender._id.toString() === user._id.toString() && "ml-auto"
+              m.sender._id.toString() == user._id.toString() && "ml-auto"
             }`}
           >
             <span className="mr-1">{m.content.text}</span>
@@ -131,6 +130,8 @@ function MessageChat() {
             </small>
           </div>
         ))}
+        <div ref={messagesEndRef} />
+
         {/* </div> */}
       </div>
       {/* SEND SECTION */}

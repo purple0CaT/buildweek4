@@ -8,9 +8,9 @@ export const chatsReducer = (state = initialState.chats, action) => {
         ...state,
         // chats:{
         //   ...state.chats,
-          active: action.payload
+        active: action.payload,
         // }
-      }
+      };
     case SET_CHATS:
       return {
         ...state,
@@ -19,7 +19,7 @@ export const chatsReducer = (state = initialState.chats, action) => {
     case "SET_ACTIVE_HISTORY":
       return {
         ...state,
-        active: { history: action.payload },
+        active: { ...state.active, history: action.payload },
       };
     default:
       return state;
