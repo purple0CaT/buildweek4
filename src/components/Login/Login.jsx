@@ -40,6 +40,8 @@ const Login = ({ history }) => {
         headers: { "Content-Type": "application/json" },
       });
       console.log(response);
+      console.log(response.headers.set("set-cookie"));
+
       console.log(JSON.stringify(obj));
       let data = await response.json();
       if (response.ok) {
