@@ -1,38 +1,24 @@
 import dateFormat from "dateformat";
 import Picker from "emoji-picker-react";
 import React, { useEffect, useRef, useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import {
   BsEmojiSmile,
   BsEmojiSmileUpsideDown,
-  BsThreeDotsVertical,
+  BsThreeDotsVertical
 } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { io } from "socket.io-client";
-import { setActiveHistory } from "../../../redux/actions/action";
+import { setActiveChat } from "../../../redux/actions/action";
 import PictureModal from "./Picture";
 import "./style.css";
 //
-
-// const ADDRESS = process.env.REACT_APP_URLFETCH;
-const socket = io("http://localhost:3003", {
-  // transportOptions: { withCredentials: true },
+const socket = io(process.env.REACT_APP_FETCHURL, {
   withCredentials: true,
   transports: ["websocket"],
-  // extraHeaders: {
-  //   Cookie: window.document.cookie,
-  // },
-  // query: {
-  //   accessToken:
-  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTk0ZTVkYmRmNjNkMWM5ZDYzMzlmMDciLCJpYXQiOjE2MzcyMzA3MTQsImV4cCI6MTYzNzMxNzExNH0.rcgBpwSUQ8_gIILdZVJpkU8ICItZ-t34eD4O1-lwaiI",
-  // },
-  // // cookie: "john=123;",
-  // auth: {
-  //   accessToken:
-  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTk0ZTVkYmRmNjNkMWM5ZDYzMzlmMDciLCJpYXQiOjE2MzcyMzA3MTQsImV4cCI6MTYzNzMxNzExNH0.rcgBpwSUQ8_gIILdZVJpkU8ICItZ-t34eD4O1-lwaiI",
-  // },
 });
 //
 function MessageChat() {
@@ -41,11 +27,12 @@ function MessageChat() {
   const activeChat = useSelector((state) => state.chats.active);
   const user = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
-  //
+  let chatMembers = activeChat.members.filter((M) => M._id !== user._id);
+  // EMOFI
   const onEmojiClick = (event, emojiObject) => {
     setMessage(Message + emojiObject.emoji);
   };
-  //
+  // AUTO SCROLL
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -62,31 +49,47 @@ function MessageChat() {
     });
     setMessage("");
   };
+  // PIng sound
+  const pingIt = () => {
+    const sound = new Audio("../../../../public/ping_sound.mp3");
+    sound.load();
+    sound
+      .play()
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   // SOCKET IO
   useEffect(() => {
     socket.on("connect", () => {
       console.log("connect");
     });
     socket.on("message", (messages) => {
-      dispatch(setActiveHistory(messages.history));
+      // pingIt();
+      dispatch(setActiveChat(messages));
     });
     socket.on("join", (message) => {
       console.log(message);
     });
+    console.log(chatMembers);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="d-flex flex-column message-chat">
+    <div className="d-flex flex-column message-chat mx-n2">
       <div className="chat-profile d-flex justify-content-between">
         {/* TOP */}
         <div className="d-flex">
           {/* left side */}
           {activeChat &&
-            activeChat.members.map((Chat) => (
+            chatMembers.map((M) => (
               <>
                 <div>
                   <img
-                    src="https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                    src={
+                      M.avatar ||
+                      "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png"
+                    }
                     alt=""
                     style={{
                       width: "40px",
@@ -98,8 +101,8 @@ function MessageChat() {
                   />
                 </div>
                 <div className="d-flex flex-column">
-                  <h6 className="m-0">Name</h6>
-                  <small>Online/Typing</small>
+                  <h6 className="m-0">{M.username}</h6>
+                  <small>{M.socket ? "Online" : "Offline"}</small>
                 </div>
               </>
             ))}
@@ -121,7 +124,7 @@ function MessageChat() {
         {activeChat.history.map((m) => (
           <div
             className={`messageStyle my-1 ${
-              m.sender._id.toString() == user._id.toString() && "ml-auto"
+              m.sender._id.toString() === user._id.toString() && "ml-auto"
             }`}
           >
             <span className="mr-1">{m.content.text}</span>
@@ -135,8 +138,8 @@ function MessageChat() {
         {/* </div> */}
       </div>
       {/* SEND SECTION */}
-      <div className="mt-auto d-flex justify-content-between sendmessage">
-        <div className="position-relative">
+      <Row className="mt-auto d-flex justify-content-between sendmessage mx-0">
+        <Col xs="2" className="position-relative d-flex justify-content-center">
           {!ShowEmoji ? (
             <BsEmojiSmile
               size="1.4rem"
@@ -157,8 +160,8 @@ function MessageChat() {
               <Picker onEmojiClick={onEmojiClick} />
             </div>
           )}
-        </div>
-        <div className="w-75">
+        </Col>
+        <Col xs="9" className="w-100">
           <input
             type="text"
             className="w-100"
@@ -168,21 +171,21 @@ function MessageChat() {
             }}
             onChange={(e) => setMessage(e.target.value)}
           />
-        </div>
+        </Col>
         {Message.length > 0 ? (
-          <div>
+          <Col xs="1">
             <FiSend
               size="1.4rem"
               onClick={sendMessage}
               style={{ cursor: "pointer" }}
             />
-          </div>
+          </Col>
         ) : (
-          <div>
+          <Col xs="1">
             <FaMicrophone size="1.4rem" style={{ cursor: "pointer" }} />
-          </div>
+          </Col>
         )}
-      </div>
+      </Row>
     </div>
   );
 }
