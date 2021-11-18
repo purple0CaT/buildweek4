@@ -16,8 +16,22 @@ import "./style.css";
 //
 
 // const ADDRESS = process.env.REACT_APP_URLFETCH;
-const socket = io(process.env.REACT_APP_URLFETCH, {
-  transports: ["websocket"],
+const socket = io("http://localhost:3003", {
+  transportOptions: { withCredentials: true },
+  withCredentials: true,
+  // transports: ["websocket"],
+  // extraHeaders: {
+  //   Cookie: window.document.cookie,
+  // },
+  // query: {
+  //   accessToken:
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTk0ZTVkYmRmNjNkMWM5ZDYzMzlmMDciLCJpYXQiOjE2MzcyMzA3MTQsImV4cCI6MTYzNzMxNzExNH0.rcgBpwSUQ8_gIILdZVJpkU8ICItZ-t34eD4O1-lwaiI",
+  // },
+  // // cookie: "john=123;",
+  auth: {
+    accessToken:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTk0ZTVkYmRmNjNkMWM5ZDYzMzlmMDciLCJpYXQiOjE2MzcyMzA3MTQsImV4cCI6MTYzNzMxNzExNH0.rcgBpwSUQ8_gIILdZVJpkU8ICItZ-t34eD4O1-lwaiI",
+  },
 });
 //
 function MessageChat() {
@@ -32,14 +46,23 @@ function MessageChat() {
   };
   //
   const sendMessage = () => {
-    alert(Message);
+    // alert(Message);
+    socket.emit("sendmessage", {
+      message: Message,
+      img: "",
+      room: activeChat._id,
+    });
     setMessage("");
-    socket.emit("sendmessage", { message: Message, room: "" });
   };
   //
   useEffect(() => {
+    console.log("Test!");
+    console.log(window.document.cookie);
     socket.on("connect", () => {
-      alert("Connect!");
+      console.log("connect");
+    });
+    socket.on("message", (message) => {
+      alert(message.content.text);
     });
     // socket.on("loggedin", () => {
     //   alert("U are loggedIn!");
@@ -49,9 +72,10 @@ function MessageChat() {
     //     fetchUsers();
     //   });
     // });
-    // socket.on("message", (message) => {
-    //   setChatHistory((prev) => [...prev, message]);
-    // });
+    socket.on("join", (message) => {
+      console.log(message);
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -135,6 +159,9 @@ function MessageChat() {
             type="text"
             className="w-100"
             value={Message}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") sendMessage();
+            }}
             onChange={(e) => setMessage(e.target.value)}
           />
         </div>
