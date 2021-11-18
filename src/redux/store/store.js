@@ -10,6 +10,10 @@ import { socketReducer } from "../reducer/socket";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const initialState = {
+  LoginDetails: {
+    email: "",
+    password: "",
+  },
   userInfo: {
     _id: "1",
     name: "",
