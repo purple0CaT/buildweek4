@@ -36,7 +36,8 @@ const Login = ({ history }) => {
       let response = await fetch(`http://localhost:3003/users/session`, {
         method: "POST",
         body: JSON.stringify(obj),
-        credentials: "same-origin",
+        credentials: "include",
+        withCredentials: true,
         headers: { "Content-Type": "application/json" },
         // Set-Cookie: true
       });
