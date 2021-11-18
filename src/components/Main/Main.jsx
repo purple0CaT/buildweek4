@@ -14,7 +14,7 @@ const Main = () => {
     document
       .getElementsByClassName("sidebar-bt")[0]
       .classList.add("profile-open");
-    document.getElementsByClassName("picIm")[0].classList.add("pic-height");
+    // document.getElementsByClassName("picIm")[0].classList.add("pic-height");
   };
 
   const hideProfile = () => {
@@ -22,7 +22,7 @@ const Main = () => {
     document
       .getElementsByClassName("sidebar-bt")[0]
       .classList.remove("profile-open");
-    document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
+    // document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
   };
 
   // useEffect(() => {
