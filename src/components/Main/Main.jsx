@@ -15,6 +15,7 @@ const Main = () => {
   const [imageFile, setimageFile] = useState(
     "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png"
   );
+  // const [imageFile, setimageFile] = useState();
   // const [imagePreview, setimagePreview] = useState(
   //   "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png"
   // );
@@ -52,7 +53,16 @@ const Main = () => {
   //   }
   // };
 
+  const imageUploadChecker = (e) => {
+    if (e.target.files.length == 0) {
+      console.log("No image selected!");
+    } else {
+      setimageFile(e.target.files[0]);
+    }
+  };
+
   const uploadImage = async () => {
+    // if (imageFile.length > 0) {
     const formData = new FormData();
     formData.append("avatar", imageFile);
     console.log(formData);
@@ -60,11 +70,11 @@ const Main = () => {
       let response = await fetch(`http://localhost:3003/users/me/avatar`, {
         method: "POST",
         body: formData,
-        credentials: "same-origin",
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg`,
-          cookie: `accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzgzNDQyMH0.0vnJrJBd-QMKCkeJbgFDNQ6nFrarMI1PpE3w9dAX_iI`,
-        },
+        credentials: "include",
+        // headers: {
+        //   Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg`,
+        //   cookie: `accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzgzNDQyMH0.0vnJrJBd-QMKCkeJbgFDNQ6nFrarMI1PpE3w9dAX_iI`,
+        // },
       });
       if (response.ok) {
         const imageUploadResponse = await response.json();
@@ -73,6 +83,9 @@ const Main = () => {
     } catch (error) {
       console.log(error);
     }
+    // } else {
+    //   console.log("No image selected!");
+    // }
   };
 
   // useEffect(() => {
