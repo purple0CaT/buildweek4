@@ -18,3 +18,7 @@ export const newMessage = (value) => ({
   type: "NEW_MESSAGE",
   payload: value,
 });
+export const setActiveHistory = (value) => ({
+  type: "SET_ACTIVE_HISTORY",
+  payload: value,
+});
