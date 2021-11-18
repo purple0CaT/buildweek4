@@ -8,18 +8,19 @@ import {
 } from "react-icons/bs";
 import { FaMicrophone } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { io } from "socket.io-client";
+import { setActiveHistory } from "../../../redux/actions/action";
 import PictureModal from "./Picture";
 import "./style.css";
 //
 
 // const ADDRESS = process.env.REACT_APP_URLFETCH;
 const socket = io("http://localhost:3003", {
-  transportOptions: { withCredentials: true },
+  // transportOptions: { withCredentials: true },
   withCredentials: true,
-  // transports: ["websocket"],
+  transports: ["websocket"],
   // extraHeaders: {
   //   Cookie: window.document.cookie,
   // },
@@ -28,10 +29,10 @@ const socket = io("http://localhost:3003", {
   //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTk0ZTVkYmRmNjNkMWM5ZDYzMzlmMDciLCJpYXQiOjE2MzcyMzA3MTQsImV4cCI6MTYzNzMxNzExNH0.rcgBpwSUQ8_gIILdZVJpkU8ICItZ-t34eD4O1-lwaiI",
   // },
   // // cookie: "john=123;",
-  auth: {
-    accessToken:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTk0ZTVkYmRmNjNkMWM5ZDYzMzlmMDciLCJpYXQiOjE2MzcyMzA3MTQsImV4cCI6MTYzNzMxNzExNH0.rcgBpwSUQ8_gIILdZVJpkU8ICItZ-t34eD4O1-lwaiI",
-  },
+  // auth: {
+  //   accessToken:
+  //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTk0ZTVkYmRmNjNkMWM5ZDYzMzlmMDciLCJpYXQiOjE2MzcyMzA3MTQsImV4cCI6MTYzNzMxNzExNH0.rcgBpwSUQ8_gIILdZVJpkU8ICItZ-t34eD4O1-lwaiI",
+  // },
 });
 //
 function MessageChat() {
@@ -39,6 +40,7 @@ function MessageChat() {
   const [ShowEmoji, setShowEmoji] = useState(false);
   const activeChat = useSelector((state) => state.chats.active);
   const user = useSelector((state) => state.userInfo);
+  const dispatch = useDispatch();
   //
   const onEmojiClick = (event, emojiObject) => {
     console.log(emojiObject);
@@ -56,13 +58,15 @@ function MessageChat() {
   };
   //
   useEffect(() => {
-    console.log("Test!");
-    console.log(window.document.cookie);
+    // console.log("Test!");
+    // console.log(document.cookie);
     socket.on("connect", () => {
       console.log("connect");
     });
-    socket.on("message", (message) => {
-      alert(message.content.text);
+    socket.on("message", (messages) => {
+      // alert(message.content.text);
+      // console.log(messages);
+      dispatch(setActiveHistory(messages.history));
     });
     // socket.on("loggedin", () => {
     //   alert("U are loggedIn!");
@@ -75,7 +79,6 @@ function MessageChat() {
     socket.on("join", (message) => {
       console.log(message);
     });
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

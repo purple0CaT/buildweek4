@@ -16,6 +16,11 @@ export const chatsReducer = (state = initialState.chats, action) => {
         ...state,
         list: [action.payload],
       };
+    case "SET_ACTIVE_HISTORY":
+      return {
+        ...state,
+        active: { history: action.payload },
+      };
     default:
       return state;
   }
