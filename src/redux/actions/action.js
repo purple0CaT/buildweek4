@@ -13,7 +13,6 @@ export const setUserInfo = (userObj) => ({
   type: SET_USER_INFO,
   payload: userObj,
 });
-export const SET_ACTIVE_CHAT='SET_ACTIVE_CHAT'
 export const setActiveChat = (value) => ({
   type: SET_ACTIVE_CHAT,
   payload: value,

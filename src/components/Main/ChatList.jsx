@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
-import tempChatExample from './tempChatExample.json' // CHAT OBJECTS EXAMPLE
 import { setActiveChat } from "../../redux/actions/action.js";
+import tempChatExample from './TempChatExample.json'; // CHAT OBJECTS EXAMPLE
 
 const mapStateToProps=(state)=>({
   chats: state.chats.list,
