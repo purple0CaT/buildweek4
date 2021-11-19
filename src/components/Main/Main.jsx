@@ -15,6 +15,8 @@ const Main = ({ history }) => {
 
   const [imageFile, setimageFile] = useState(stockImage);
 
+
+
   const showProfile = () => {
     console.log("clicked");
     document
@@ -31,7 +33,9 @@ const Main = ({ history }) => {
     document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
   };
 
-  const imageUploadChecker = async (e) => {
+
+  const imageUploadChecker = (e) => {
+
     if (e.target.files.length == 0) {
       console.log("No image selected!");
     } else {
