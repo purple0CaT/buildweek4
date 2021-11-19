@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row, InputGroup, FormControl } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { connect } from "react-redux";
-import { useSelector } from "react-redux";
+import { Col, Container, FormControl, InputGroup, Row } from "react-bootstrap";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { setActiveChat, setChats } from "../../redux/actions/action.js";
+import dateformat from "dateformat";
 
 const mapStateToProps = (state) => ({
   chats: state.chats.list,
@@ -16,7 +15,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChatList = ({ selectChat }) => {
-  const dispatch = useDispatch();
   const chats = useSelector((state) => state.chats.list);
   // STATE & useEffect FOR TESTING
   // const [chats, setChats] = useState([]);
@@ -142,7 +140,10 @@ const ChatList = ({ selectChat }) => {
             <Col xs={2}>
               {chat.members && chat.members.length === 2 ? (
                 <img
-                  src={chat.members[0].avatar}
+                  src={
+                    chat.members[0].avatar ||
+                    "https://via.placeholder.com/300.png"
+                  }
                   alt="friend avatar"
                   className="rounded-circle"
                   style={{ height: 48 }}
