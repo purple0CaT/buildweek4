@@ -93,6 +93,12 @@ const Login = ({ history }) => {
           </InputGroup>
 
           <Button onClick={handleSubmit}>login</Button>
+          <a
+            href={`${process.env.REACT_APP_FETCHURL}/auth/googleLogin`}
+            className="btn btn-info my-1"
+          >
+            Login with Google
+          </a>
           <div className="mt-3">
             not registered? <Link to="/Register">Register Now!</Link>
           </div>
