@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { connect } from "react-redux";
-import { setActiveChat } from "../../redux/actions/action.js";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { setActiveChat, setChats } from "../../redux/actions/action.js";
+import dateformat from "dateformat";
 
 const mapStateToProps = (state) => ({
   chats: state.chats.list,
@@ -13,27 +14,28 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChatList = ({ selectChat }) => {
+  const dispatch = useDispatch();
+  const chats = useSelector((state) => state.chats.list);
   // STATE & useEffect FOR TESTING
-  const [chats, setChats] = useState([]);
+  // const [chats, setChats] = useState([]);
   // const getFakeChats = () => {
   //   setChats(tempChatExample);
   // };
-
   const getRealChats = async () => {
     try {
-      let response = await fetch(`http://localhost:3003/chats`, {
+      let response = await fetch(`${process.env.REACT_APP_FETCHURL}/chats`, {
         credentials: "include",
       });
       if (response.ok) {
         const chatsRes = await response.json();
-        console.log(chatsRes);
-        setChats(chatsRes);
+        // console.log(chatsRes);
+        dispatch(setChats(chatsRes));
       }
     } catch (error) {
       console.log(error);
     }
   };
-
+  //
   useEffect(() => {
     getRealChats();
   }, []); //socket
@@ -47,8 +49,13 @@ const ChatList = ({ selectChat }) => {
       <h1>Chat List</h1>
       {chats &&
         chats.map((chat) => (
-          <Row key={chat._id} onClick={() => selectChat(chat)}>
-            {console.log(chat)}
+          <Row
+            key={chat._id + 1}
+            onClick={() => selectChat(chat)}
+            className="justify-content-between align-items-center my-2 p-2"
+            style={{ cursor: "pointer" }}
+          >
+            {/* {console.log(chat)} */}
             <Col xs={2}>
               {chat.members && chat.members.length === 1 ? (
                 <img
@@ -68,18 +75,24 @@ const ChatList = ({ selectChat }) => {
             </Col>
             <Col xs={8}>
               {chat.members.length === 1 ? (
-                <p>
+                <p className="m-0">
                   <strong>{chat.members[0].username}</strong>
                 </p>
               ) : (
-                <p>
-                  <strong>GROUP CHAT NAME</strong>
+                <p className="m-0">
+                  <strong className="m-0">Chat name</strong>
                 </p>
               )}
-              <p>{chat.history && chat.history.at(-1).content.text}</p>
+              <p className="m-0">
+                {chat.history && chat.history.at(-1).content.text}
+              </p>
             </Col>
             <Col xs={2}>
-              <p>{chat.history && chat.history.at(-1).timestamp}</p>
+              <p className="m-0">
+                {console.log(chat.history.at(-1))}
+                {chat.history &&
+                  dateformat(chat.history.at(-1).createdAt, "HH:MM")}
+              </p>
             </Col>
           </Row>
         ))}
