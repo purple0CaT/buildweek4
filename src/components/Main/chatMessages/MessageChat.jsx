@@ -83,7 +83,7 @@ function MessageChat() {
           {activeChat &&
             chatMembers.map((M) => (
               <>
-                <div>
+                <div key={M._id + 321}>
                   <img
                     src={
                       M.avatar ||
@@ -131,6 +131,7 @@ function MessageChat() {
         {activeChat.history.length > 0 &&
           activeChat.history.map((m) => (
             <div
+              key={m._id + 54}
               className={`messageStyle my-1 ${
                 m.sender._id.toString() === user._id.toString() && "ml-auto"
               }`}

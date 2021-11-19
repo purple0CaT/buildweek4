@@ -62,12 +62,14 @@
   border-bottom-left-radius: 20px;
   width: 17rem;
   top: 0;
-  right: 0rem;
+  right: -18rem;
   transition: 0.4s;
+  opacity: 0;
   /* display: none; */
 }
 .chatAppear {
   /* display: block; */
+  opacity: 1;
   right: 0;
 }
 .addUserSearchBar {

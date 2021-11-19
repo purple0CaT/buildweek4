@@ -12,13 +12,28 @@ function ChatSetting({ closeSettings, CloseSettingsModal }) {
   const [AddField, setAddField] = useState(false);
   const [FetchedUsers, setFetchedUsers] = useState([]);
   const [AddFieldQuery, setAddFieldQuery] = useState("");
-  //
+  // DELETE USER
   const deleteUser = async (id) => {
     try {
-      console.log("Delete!", id);
-    } catch (error) {}
+      const url = `${process.env.REACT_APP_FETCHURL}/chats/deleteFromChat/${id}/${chat._id}`;
+      const res = await fetch(url, {
+        credentials: "include",
+        method: "DELETE",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        dispatch(setChats(data.allChats));
+        dispatch(setActiveChat(data.chat));
+      } else {
+        console.log("Delete!", id);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-  //
+
+  // ADD USER TO CHAT
   const addUserToChat = async (id) => {
     try {
       const url = `${process.env.REACT_APP_FETCHURL}/chats/addToChat/${id}/${chat._id}`;
@@ -36,7 +51,7 @@ function ChatSetting({ closeSettings, CloseSettingsModal }) {
       console.log(error);
     }
   };
-  //
+  // FIND USER
   const fetchUsers = async () => {
     try {
       const url = `${process.env.REACT_APP_FETCHURL}/users/search/${AddFieldQuery}`;
@@ -51,6 +66,7 @@ function ChatSetting({ closeSettings, CloseSettingsModal }) {
       console.log(error);
     }
   };
+  //   ====================
   return (
     <div
       className={`h-100 position-absolute chatSetting ${
