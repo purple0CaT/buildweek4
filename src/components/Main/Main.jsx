@@ -81,16 +81,21 @@ const Main = () => {
               </Row>
               <Row className="bg-2 px-3 d-flex flex-column">
                 <div className="mx-auto pic">
-                  <label for="file-upload" className="custom-file-upload py-2">
-                    Select image
-                  </label>
+                  <div className="m-auto imageuploadtext text-primary px-2 pt-1">
+                    <label
+                      for="file-upload"
+                      className="custom-file-upload py-2"
+                    >
+                      Select image
+                    </label>
 
-                  <input
-                    className="d-none"
-                    id="file-upload"
-                    type="file"
-                    onChange={(e) => imageUploadChecker(e)}
-                  />
+                    <input
+                      className="d-none"
+                      id="file-upload"
+                      type="file"
+                      onChange={(e) => imageUploadChecker(e)}
+                    />
+                  </div>
                   {profile.avatar ? (
                     <img
                       id="proPic"

@@ -209,6 +209,7 @@ function MessageChat({ match }) {
       createdAt: new Date(),
     },
   ];
+
   // useEffect(() => {
   //   console.log(match.params.id);
   //   console.log(user);
