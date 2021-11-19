@@ -47,7 +47,7 @@ const ChatList = ({ selectChat }) => {
   const getUsers = async (query) => {
     try {
       let response = await fetch(
-        `http://localhost:3003/users/search/${query}`,
+        `${process.env.REACT_APP_FETCHURL}/users/search/${query}`,
         {
           credentials: "include",
         }
@@ -69,7 +69,7 @@ const ChatList = ({ selectChat }) => {
     };
     try {
       let response = await fetch(
-        `http://localhost:3003/chats/createChat/${receiverId}`,
+        `${process.env.REACT_APP_FETCHURL}/chats/createChat/${receiverId}`,
         {
           method: "POST",
           body: JSON.stringify(obj),
