@@ -5,6 +5,7 @@
   position: relative;
   left: -700px;
   z-index: 10;
+  overflow-y: hidden;
 }
 
 .profile-open {

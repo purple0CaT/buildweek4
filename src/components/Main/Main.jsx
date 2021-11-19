@@ -87,7 +87,7 @@ const Main = ({ history }) => {
   //   });
   // });
 
-  // useEffect(() => getMyProfile(), []);
+  // useEffect(() => useSelector((state) => state.userInfo), [profile.avatar]);
 
   return (
     <Container fluid className="h-100">
