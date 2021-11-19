@@ -47,7 +47,9 @@ const Login = ({ history }) => {
       if (response.ok) {
         dispatch(setUserInfo(data.user.user));
         dispatch(setChats(data.user.chats));
-        history.push(`/main/${data.user.user._id}`);
+        setTimeout(() => {
+          history.push(`/main/${data.user.user._id}`);
+        }, 500);
       } else {
         console.log("Not groovy");
       }
