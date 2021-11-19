@@ -160,7 +160,7 @@ const ChatList = ({ selectChat }) => {
             <Col xs={8}>
               {chat.members && chat.members.length === 2 ? (
                 <p>
-                  <strong>{chat.members[0].username}</strong>
+                  <strong>{chat.members[1].username}</strong>
                 </p>
               ) : (
                 <p className="m-0">
