@@ -1,13 +1,14 @@
-import { Button, Col, Container, Row, Image } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { FiArrowLeft } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import ChatList from "./ChatList";
 // import image from "../../data/Capture1.PNG";
 import MessageChat from "./chatMessages/MessageChat";
 import "./sidebar-style.css";
-import ChatList from "./ChatList";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-const Main = () => {
+const Main = ({ history }) => {
   const profile = useSelector((state) => state.userInfo);
   const stockImage =
     "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png";
@@ -58,9 +59,36 @@ const Main = () => {
     }
   };
 
+
   const showImage = () => {
     if (imageFile !== stockImage) uploadImage();
   };
+
+  const LogOut = async () => {
+    try {
+      let response = await fetch(`http://localhost:3003/users/session`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (response.ok) {
+        // const logOutRes = await response.json();
+        // console.log(logOutRes);
+        history.push("/Login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     socket.emit(`loggedin`, { newUser });
+  //     console.log(`Connection ${newUser}!`);
+  //   });
+  // });
+
+  // useEffect(() => getMyProfile(), []);
+
 
   return (
     <Container fluid className="h-100">
@@ -141,6 +169,9 @@ const Main = () => {
                   value="Hey there, I am using WhatsApp"
                   aria-describedby="basic-addon1"
                 />
+                <div className="input-heading">
+                  <Button onClick={LogOut}>Log Out</Button>
+                </div>
               </Row>
             </Col>
           </Row>
@@ -157,4 +188,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default withRouter(Main);

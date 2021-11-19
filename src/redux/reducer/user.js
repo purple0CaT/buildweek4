@@ -1,5 +1,5 @@
-import { initialState } from "../store/store.js";
 import { SET_USER_INFO } from "../actions/action.js";
+import { initialState } from "../store/store.js";
 //
 export const userReducer = (state = initialState.userInfo, action) => {
   switch (action.type) {

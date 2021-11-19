@@ -1,18 +1,16 @@
-import {
-  InputGroup,
-  Button,
-  FormControl,
-  DropdownButton,
-  Dropdown,
-  FormGroup,
-  Form,
-} from "react-bootstrap";
-// import './Login.css'
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useState } from "react";
+import {
+  Button,
+  Col,
+  Container,
+  FormControl,
+  InputGroup,
+  Row,
+} from "react-bootstrap";
+import { useDispatch } from "react-redux";
+// import './Login.css'
+import { Link, withRouter } from "react-router-dom";
 import { setChats, setUserInfo } from "../../redux/actions/action.js";
-import { withRouter } from "react-router-dom";
 
 //const user = useSelector((state) => state.userInfo);
 
@@ -41,10 +39,10 @@ const Login = ({ history }) => {
         headers: { "Content-Type": "application/json" },
         // Set-Cookie: true
       });
-      console.log(response);
-      console.log(response.headers.get("set-cookie"));
+      // console.log(response);
+      // console.log(response.headers.get("set-cookie"));
 
-      console.log(JSON.stringify(obj));
+      // console.log(JSON.stringify(obj));
       let data = await response.json();
       if (response.ok) {
         dispatch(setUserInfo(data.user.user));
@@ -70,28 +68,37 @@ const Login = ({ history }) => {
   };
 
   return (
-    <div>
-      <InputGroup className="mb-3">
-        <div>UserName</div>
-        <FormControl
-          aria-label="Example text with button addon"
-          aria-describedby="basic-addon1"
-          // value="Paul@hotmail.com"
-          onKeyUp={(e) => setEmail(e.target.value)}
-        />
-        <div>Password</div>
-        <FormControl
-          aria-label="Example text with button addon"
-          aria-describedby="basic-addon1"
-          onKeyUp={(e) => setPassword(e.target.value)}
-        />
-      </InputGroup>
+    <Container>
+      <Row>
+        <Col
+          xs="6"
+          className="mx-auto text-white p-5 d-flex flex-column justify-content-center align-items-center"
+        >
+          <InputGroup className="my-3 d-flex flex-column justify-content-center align-items-center w-100">
+            <div>UserName</div>
+            <FormControl
+              aria-label="Example text with button addon"
+              aria-describedby="basic-addon1"
+              className="w-100"
+              // value="Paul@hotmail.com"
+              onKeyUp={(e) => setEmail(e.target.value)}
+            />
+            <div className="mt-3">Password</div>
+            <FormControl
+              className="w-100"
+              aria-label="Example text with button addon"
+              aria-describedby="basic-addon1"
+              onKeyUp={(e) => setPassword(e.target.value)}
+            />
+          </InputGroup>
 
-      <Button onClick={handleSubmit}>login</Button>
-      <div>
-        not registered? <Link to="/Register">Register Now!</Link>
-      </div>
-    </div>
+          <Button onClick={handleSubmit}>login</Button>
+          <div className="mt-3">
+            not registered? <Link to="/Register">Register Now!</Link>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
