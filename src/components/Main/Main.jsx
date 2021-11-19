@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { FiArrowLeft } from "react-icons/fi";
 import { useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 import ChatList from "./ChatList";
 // import image from "../../data/Capture1.PNG";
 import MessageChat from "./chatMessages/MessageChat";
 import "./sidebar-style.css";
-import { withRouter } from "react-router-dom";
 
 const Main = ({ history }) => {
   const profile = useSelector((state) => state.userInfo);
@@ -66,10 +66,13 @@ const Main = ({ history }) => {
 
   const LogOut = async () => {
     try {
-      let response = await fetch(`http://localhost:3003/users/session`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      let response = await fetch(
+        `${process.env.REACT_APP_FETCHURL}/users/session`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       if (response.ok) {
         // const logOutRes = await response.json();
         // console.log(logOutRes);
@@ -80,12 +83,11 @@ const Main = ({ history }) => {
     }
   };
 
-  // useEffect(() => {
-  //   socket.on("connect", () => {
-  //     socket.emit(`loggedin`, { newUser });
-  //     console.log(`Connection ${newUser}!`);
-  //   });
-  // });
+  useEffect(() => {
+    if (profile._id === "") {
+      history.push("/login");
+    }
+  }, []);
 
   // useEffect(() => useSelector((state) => state.userInfo), [profile.avatar]);
 
