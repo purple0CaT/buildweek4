@@ -53,3 +53,28 @@
   bottom: 120%;
   left: -1rem;
 }
+/* CHAT SETTING */
+.chatSetting {
+  z-index: 900;
+  background-color: rgb(235, 235, 235);
+  box-shadow: 0 0 10px grey;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  width: 17rem;
+  top: 0;
+  right: -18rem;
+  transition: 0.4s;
+  opacity: 0;
+  /* display: none; */
+}
+.chatAppear {
+  /* display: block; */
+  opacity: 1;
+  right: 0;
+}
+.addUserSearchBar {
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: rgb(224, 224, 224);
+  box-shadow: 0 5px 5px grey;
+}

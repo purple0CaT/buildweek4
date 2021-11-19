@@ -15,7 +15,9 @@ const mapDispatchToProps = (dispatch) => ({
   // setChats: (array)
 });
 
-const ChatList = ({ selectChat, chats }) => {
+const ChatList = ({ selectChat }) => {
+  const dispatch = useDispatch();
+  const chats = useSelector((state) => state.chats.list);
   // STATE & useEffect FOR TESTING
   // const [chats, setChats] = useState([]);
   // const getFakeChats = () => {
@@ -31,7 +33,7 @@ const ChatList = ({ selectChat, chats }) => {
 
   const getRealChats = async () => {
     try {
-      let response = await fetch(`http://localhost:3003/chats`, {
+      let response = await fetch(`${process.env.REACT_APP_FETCHURL}/chats`, {
         credentials: "include",
       });
       if (response.ok) {
@@ -130,8 +132,13 @@ const ChatList = ({ selectChat, chats }) => {
       {console.log(chats)}
       {chats &&
         chats.map((chat) => (
-          <Row key={chat._id} onClick={() => selectChat(chat)}>
-            {console.log(chat)}
+          <Row
+            key={chat._id + 1}
+            onClick={() => selectChat(chat)}
+            className="justify-content-between align-items-center my-2 p-2"
+            style={{ cursor: "pointer" }}
+          >
+            {/* {console.log(chat)} */}
             <Col xs={2}>
               {chat.members && chat.members.length === 2 ? (
                 <img
@@ -155,14 +162,20 @@ const ChatList = ({ selectChat, chats }) => {
                   <strong>{chat.members[0].username}</strong>
                 </p>
               ) : (
-                <p>
-                  <strong>GROUP CHAT NAME</strong>
+                <p className="m-0">
+                  <strong className="m-0">Chat name</strong>
                 </p>
               )}
-              <p>{chat.history && chat.history.at(-1).content.text}</p>
+              <p className="m-0">
+                {chat.history && chat.history.at(-1).content.text}
+              </p>
             </Col>
             <Col xs={2}>
-              <p>{chat.history && chat.history.at(-1).timestamp}</p>
+              <p className="m-0">
+                {console.log(chat.history.at(-1))}
+                {chat.history &&
+                  dateformat(chat.history.at(-1).createdAt, "HH:MM")}
+              </p>
             </Col>
           </Row>
         ))}
