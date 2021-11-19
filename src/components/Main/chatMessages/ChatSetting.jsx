@@ -41,7 +41,7 @@ function ChatSetting({ closeSettings, CloseSettingsModal }) {
       if (res.ok) {
         const data = await res.json();
         console.log(data);
-        dispatch(setChats(data.AllChats));
+        dispatch(setChats(data.allChats));
         dispatch(setActiveChat(data.newChat));
         setAddField(!AddField);
       } else {
