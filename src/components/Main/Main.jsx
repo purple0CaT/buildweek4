@@ -92,7 +92,7 @@ const Main = ({ history }) => {
   return (
     <Container fluid className="h-100">
       <Row className="h-100">
-        <Col xs={4}>
+        <Col xs={4} className="overflow-hidden">
           <Button onClick={() => showProfile()}> SHOW</Button>
           {/* <Button onclick={showProfile}> SHOW</Button> */}
           <Row className="sidebar-bt profile-container position-absolute">

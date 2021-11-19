@@ -1,32 +1,47 @@
+import { useState } from "react";
 import {
   Button,
   Col,
   Container,
-  Dropdown,
-  DropdownButton,
-  Form,
   FormControl,
   InputGroup,
-  Row,
+  Row
 } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-
-// import store from '../../redux/store/store.js'
-// import { connect } from 'react-redux'
-// // import { setUserInfo } from '../action/action.js';
-
-// const mapStateToProps = (state) => ({
-//   name: state.userInfo.name,
-//   email: state.userInfo.email,
-// })
-
-// userInfo: {
-//   _id: "",
-//   name: "",
-//   email: "",
-//   avatar: "",
+import { setUserInfo } from "../../redux/actions/action.js";
 
 const Register = () => {
+  const [Credentials, setCredentials] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
+  const history = useHistory();
+  //
+  const sendCredentials = async () => {
+    console.log("Send!");
+    try {
+      const url = `${process.env.REACT_APP_FETCHURL}/users/account`;
+      const res = await fetch(url, {
+        method: "POST",
+        withCredentials: true,
+        credentials: "include",
+        body: JSON.stringify(Credentials),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log(data);
+        dispatch(setUserInfo(data.newUser));
+        history.push(`/main/${data.newUser._id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Container>
       <br />
@@ -41,6 +56,10 @@ const Register = () => {
               id="search-input"
               type="text"
               placeholder="Search"
+              value={Credentials.username}
+              onChange={(e) =>
+                setCredentials({ ...Credentials, username: e.target.value })
+              }
               style={{ backgroundColor: "#222", color: "#aaa", width: "100%" }}
               aria-label="Example text with button addon"
               aria-describedby="basic-addon1"
@@ -58,6 +77,10 @@ const Register = () => {
               className="w-100"
               aria-label="Example text with button addon"
               aria-describedby="basic-addon1"
+              value={Credentials.email}
+              onChange={(e) =>
+                setCredentials({ ...Credentials, email: e.target.value })
+              }
             />
             <div>Password</div>
             <FormControl
@@ -65,37 +88,26 @@ const Register = () => {
               type="password"
               aria-label="Example text with button addon"
               aria-describedby="basic-addon1"
+              value={Credentials.password}
+              onChange={(e) =>
+                setCredentials({ ...Credentials, password: e.target.value })
+              }
             />
           </InputGroup>
-          <InputGroup className="mb-3">
-            <DropdownButton
-              variant="outline-secondary"
-              title="Dropdown"
-              id="input-group-dropdown-1"
-            >
-              <Dropdown.Item href="#">Action</Dropdown.Item>
-              <Dropdown.Item href="#">Another action</Dropdown.Item>
-              <Dropdown.Item href="#">Something else here</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="#">Separated link</Dropdown.Item>
-            </DropdownButton>
-            <FormControl aria-label="Text input with dropdown button" />
-          </InputGroup>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
-          <Button onclick="myFunction()">register now</Button>
+          <Button onClick={sendCredentials}>register now</Button>
           <br />
           <div>
             already have an account <Link to="/Login">Login Now!</Link>
           </div>
           <br />
           <div className="d-flex justify-content-between w-50">
-            <Button onclick="myFunction()">fboauth</Button>
-            <Button onclick="myFunction()">googleoauth</Button>
+            {/* <Button onclick="myFunction()">fboauth</Button> */}
+            <a
+              href={`${process.env.REACT_APP_FETCHURL}/auth/googleLogin`}
+              className="btn btn-info my-1"
+            >
+              Login with Google
+            </a>{" "}
           </div>
         </Col>
       </Row>

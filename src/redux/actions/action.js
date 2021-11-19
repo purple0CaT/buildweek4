@@ -29,3 +29,7 @@ export const setChats = (array) => ({
   type: SET_CHATS,
   payload: array,
 });
+export const setActiveHistory = (value) => ({
+  type: "SET_ACTIVE_HISTORY",
+  payload: value,
+});
