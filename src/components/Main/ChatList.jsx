@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setActiveChat } from "../../redux/actions/action.js";
-import tempChatExample from "./TempChatExample.json"; // CHAT OBJECTS EXAMPLE
 
 const mapStateToProps = (state) => ({
   chats: state.chats.list,
 });
 const mapDispatchToProps = (dispatch) => ({
-  selectChat: (id) => {
-    dispatch(setActiveChat(id));
+  selectChat: (chat) => {
+    dispatch(setActiveChat(chat));
   },
 });
 
@@ -48,7 +47,7 @@ const ChatList = ({ selectChat }) => {
       <h1>Chat List</h1>
       {chats &&
         chats.map((chat) => (
-          <Row key={chat._id} onClick={() => selectChat(chat._id)}>
+          <Row key={chat._id} onClick={() => selectChat(chat)}>
             {console.log(chat)}
             <Col xs={2}>
               {chat.members && chat.members.length === 1 ? (
@@ -77,10 +76,10 @@ const ChatList = ({ selectChat }) => {
                   <strong>GROUP CHAT NAME</strong>
                 </p>
               )}
-              <p>{chat.history.at(-1).content.text}</p>
+              <p>{chat.history && chat.history.at(-1).content.text}</p>
             </Col>
             <Col xs={2}>
-              <p>{chat.history.at(-1).timestamp}</p>
+              <p>{chat.history && chat.history.at(-1).timestamp}</p>
             </Col>
           </Row>
         ))}

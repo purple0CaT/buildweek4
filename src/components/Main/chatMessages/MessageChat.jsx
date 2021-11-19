@@ -113,18 +113,19 @@ function MessageChat() {
       <div className="d-flex flex-column messages p-2">
         {/* <div className=" p-2"> */}
         {/* Message */}
-        {activeChat.history.map((m) => (
-          <div
-            className={`messageStyle my-1 ${
-              m.sender._id.toString() === user._id.toString() && "ml-auto"
-            }`}
-          >
-            <span className="mr-1">{m.content.text}</span>
-            <small className="ml-auto text-muted">
-              {dateFormat(m.createdAt, "HH:MM")}
-            </small>
-          </div>
-        ))}
+        {activeChat.history.length > 0 &&
+          activeChat.history.map((m) => (
+            <div
+              className={`messageStyle my-1 ${
+                m.sender._id.toString() === user._id.toString() && "ml-auto"
+              }`}
+            >
+              <span className="mr-1">{m.content.text}</span>
+              <small className="ml-auto text-muted">
+                {dateFormat(m.createdAt, "HH:MM")}
+              </small>
+            </div>
+          ))}
         <div ref={messagesEndRef} />
 
         {/* </div> */}
