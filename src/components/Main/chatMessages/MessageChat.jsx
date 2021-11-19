@@ -27,11 +27,14 @@ function MessageChat() {
   const activeChat = useSelector((state) => state.chats.active);
   const user = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
-  let chatMembers = activeChat.members.filter((M) => M._id !== user._id);
+  let chatMembers = activeChat.members
+    ? activeChat.members.filter((M) => M._id !== user._id)
+    : [];
   // EMOFI
   const onEmojiClick = (event, emojiObject) => {
     setMessage(Message + emojiObject.emoji);
   };
+
   // AUTO SCROLL
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
@@ -109,11 +112,13 @@ function MessageChat() {
           </div>
         </div>
       </div>
+
       {/* CHAT SECTION */}
       <div className="d-flex flex-column messages p-2">
         {/* <div className=" p-2"> */}
         {/* Message */}
-        {activeChat.history.length > 0 &&
+        {activeChat.history &&
+          activeChat.history.length > 0 &&
           activeChat.history.map((m) => (
             <div
               className={`messageStyle my-1 ${

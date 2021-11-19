@@ -14,7 +14,7 @@ export const chatsReducer = (state = initialState.chats, action) => {
     case SET_CHATS:
       return {
         ...state,
-        list: [action.payload],
+        list: action.payload,
       };
     case "SET_ACTIVE_HISTORY":
       return {
