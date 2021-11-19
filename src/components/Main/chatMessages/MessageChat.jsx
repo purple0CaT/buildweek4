@@ -12,7 +12,8 @@ import { FiSend } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { io } from "socket.io-client";
-import { setActiveChat } from "../../../redux/actions/action";
+import { setActiveChat, setChats } from "../../../redux/actions/action";
+import ChatSetting from "./ChatSetting";
 import PictureModal from "./Picture";
 import "./style.css";
 //
@@ -22,16 +23,19 @@ const socket = io(process.env.REACT_APP_FETCHURL, {
 });
 //
 function MessageChat() {
-  const [Message, setMessage] = useState("");
-  const [ShowEmoji, setShowEmoji] = useState(false);
   const activeChat = useSelector((state) => state.chats.active);
   const user = useSelector((state) => state.userInfo);
   const dispatch = useDispatch();
   let chatMembers = activeChat.members.filter((M) => M._id !== user._id);
+  //
+  const [CloseSettingsModal, setCloseSettingsModal] = useState(false);
+  const [Message, setMessage] = useState("");
+  const [ShowEmoji, setShowEmoji] = useState(false);
   // EMOFI
   const onEmojiClick = (event, emojiObject) => {
     setMessage(Message + emojiObject.emoji);
   };
+
   // AUTO SCROLL
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
@@ -49,15 +53,19 @@ function MessageChat() {
     });
     setMessage("");
   };
-
+  //
+  const closeSettings = () => {
+    setCloseSettingsModal(!CloseSettingsModal);
+  };
   // SOCKET IO
   useEffect(() => {
     socket.on("connect", () => {
       console.log("connect");
     });
-    socket.on("message", (messages) => {
+    socket.on("message", ({ chatHistory, allChats }) => {
       // pingIt();
-      dispatch(setActiveChat(messages));
+      dispatch(setActiveChat(chatHistory));
+      dispatch(setChats(allChats));
     });
     // socket.on("ping", (val) => {
     //   console.log("Ping!");
@@ -76,7 +84,7 @@ function MessageChat() {
           {activeChat &&
             chatMembers.map((M) => (
               <>
-                <div>
+                <div key={M._id + 321}>
                   <img
                     src={
                       M.avatar ||
@@ -105,17 +113,28 @@ function MessageChat() {
             <PictureModal />
           </div>
           <div className="mx-1">
-            <BsThreeDotsVertical size="1.4rem" style={{ cursor: "pointer" }} />
+            <BsThreeDotsVertical
+              size="1.4rem"
+              style={{ cursor: "pointer" }}
+              onClick={closeSettings}
+            />
           </div>
         </div>
+        <ChatSetting
+          closeSettings={closeSettings}
+          CloseSettingsModal={CloseSettingsModal}
+        />
       </div>
+
       {/* CHAT SECTION */}
       <div className="d-flex flex-column messages p-2">
         {/* <div className=" p-2"> */}
         {/* Message */}
-        {activeChat.history.length > 0 &&
+        {activeChat.history &&
+          activeChat.history.length > 0 &&
           activeChat.history.map((m) => (
             <div
+              key={m._id + 54}
               className={`messageStyle my-1 ${
                 m.sender._id.toString() === user._id.toString() && "ml-auto"
               }`}
