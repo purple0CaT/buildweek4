@@ -16,10 +16,6 @@ const Main = ({ history }) => {
   const [imageFile, setimageFile] = useState(
     "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png"
   );
-  // const [imageFile, setimageFile] = useState();
-  // const [imagePreview, setimagePreview] = useState(
-  //   "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png"
-  // );
 
   const showProfile = () => {
     console.log("clicked");
@@ -36,23 +32,6 @@ const Main = ({ history }) => {
       .classList.remove("profile-open");
     document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
   };
-
-  // const getMyProfile = async () => {
-  //   try {
-  //     let response = await fetch(`http://localhost:3003/users/me`, {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg`,
-  //         cookie: `accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzgzNDQyMH0.0vnJrJBd-QMKCkeJbgFDNQ6nFrarMI1PpE3w9dAX_iI`,
-  //       },
-  //     });
-  //     let myProfile = await response.json();
-  //     setProfile(myProfile);
-  //     console.log(profile);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const imageUploadChecker = (e) => {
     if (e.target.files.length == 0) {
