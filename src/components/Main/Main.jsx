@@ -10,12 +10,12 @@ import { withRouter } from "react-router-dom";
 
 const Main = ({ history }) => {
   const profile = useSelector((state) => state.userInfo);
+  const stockImage =
+    "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png";
 
-  // const [profile, setProfile] = useState({});
-  const [imageUploaded, setimageUploaded] = useState(false);
-  const [imageFile, setimageFile] = useState(
-    "https://res.cloudinary.com/btrearty/image/upload/v1637232496/avatar/oitc3d8ldczeli6bmvdt.png"
-  );
+  const [imageFile, setimageFile] = useState(stockImage);
+
+
 
   const showProfile = () => {
     console.log("clicked");
@@ -33,16 +33,18 @@ const Main = ({ history }) => {
     document.getElementsByClassName("picIm")[0].classList.remove("pic-height");
   };
 
+
   const imageUploadChecker = (e) => {
+
     if (e.target.files.length == 0) {
       console.log("No image selected!");
     } else {
       setimageFile(e.target.files[0]);
+      console.log(imageFile);
     }
   };
 
   const uploadImage = async () => {
-    // if (imageFile.length > 0) {
     const formData = new FormData();
     formData.append("avatar", imageFile);
     console.log(formData);
@@ -59,9 +61,11 @@ const Main = ({ history }) => {
     } catch (error) {
       console.log(error);
     }
-    // } else {
-    //   console.log("No image selected!");
-    // }
+  };
+
+
+  const showImage = () => {
+    if (imageFile !== stockImage) uploadImage();
   };
 
   const LogOut = async () => {
@@ -89,6 +93,7 @@ const Main = ({ history }) => {
 
   // useEffect(() => getMyProfile(), []);
 
+
   return (
     <Container fluid className="h-100">
       <Row className="h-100">
@@ -108,35 +113,47 @@ const Main = ({ history }) => {
               </Row>
               <Row className="bg-2 px-3 d-flex flex-column">
                 <div className="mx-auto pic">
-                  {/* <img className="picIm" src={profile.image} alt="" /> */}
-                  {imageUploaded ? (
-                    // <Image src={imageFile} fluid />
-                    // <img className="picIm" src={profile.image} alt="" />
+                  <div className="m-auto imageuploadtext text-primary px-2 pt-1">
+                    <label
+                      for="file-upload"
+                      className="custom-file-upload py-2"
+                    >
+                      Select image
+                    </label>
+
+                    <input
+                      className="d-none"
+                      id="file-upload"
+                      type="file"
+                      onChange={(e) => imageUploadChecker(e)}
+                    />
+                  </div>
+                  {profile.avatar ? (
+                    <img
+                      id="proPic"
+                      className="picIm"
+                      src={profile.avatar}
+                      alt=""
+                      onClick={showImage}
+                    />
+                  ) : (
+                    <img
+                      className="picIm"
+                      src={stockImage}
+                      alt=""
+                      onClick={showImage}
+                    />
+                  )}
+                  {/* {imageUploaded ? (
                     <img className="picIm" src={profile.avatar} alt="" />
                   ) : (
                     <div className="text-center m-auto">
                       <div className="m-auto imageuploadtext text-primary px-2 pt-1">
-                        <label
-                          for="file-upload"
-                          className="custom-file-upload py-2"
-                        >
-                          Select image
-                        </label>
-
-                        <input
-                          className="d-none"
-                          id="file-upload"
-                          type="file"
-                          onChange={(e) => {
-                            setimageFile(e);
-                            uploadImage();
-                          }}
-                        />
+                        
                       </div>
-                      {/* <img className="picIm" src={profile.image} alt="" /> */}
                       <img className="picIm" src={profile.avatar} alt="" />
                     </div>
-                  )}
+                  )} */}
                 </div>
 
                 <div className="input-heading">Your name</div>

@@ -44,6 +44,7 @@ function MessageChat() {
     console.log(emojiObject);
     setMessage(Message + emojiObject.emoji);
   };
+
   //
   const sendMessage = () => {
     // alert(Message);
@@ -78,6 +79,7 @@ function MessageChat() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className="d-flex flex-column message-chat">
       <div className="chat-profile d-flex justify-content-between">
