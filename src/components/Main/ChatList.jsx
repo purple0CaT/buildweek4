@@ -118,7 +118,7 @@ const ChatList = ({ selectChat }) => {
       )}
       {searchUsers.length > 0 &&
         searchUsers.map((user) => (
-          <p>
+          <p className="m-0">
             <strong
               onClick={() => createNewChat(user._id)}
               style={{ cursor: "pointer" }}
@@ -159,7 +159,7 @@ const ChatList = ({ selectChat }) => {
             </Col>
             <Col xs={8}>
               {chat.members && chat.members.length === 2 ? (
-                <p>
+                <p className="m-0">
                   <strong>{chat.members[1].username}</strong>
                 </p>
               ) : (
