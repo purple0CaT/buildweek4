@@ -6,8 +6,9 @@ import ChatList from "./ChatList";
 // import image from "../../data/Capture1.PNG";
 import MessageChat from "./chatMessages/MessageChat";
 import "./sidebar-style.css";
+import { withRouter } from "react-router-dom";
 
-const Main = () => {
+const Main = ({ history }) => {
   const profile = useSelector((state) => state.userInfo);
 
   // const [profile, setProfile] = useState({});
@@ -71,10 +72,6 @@ const Main = () => {
         method: "POST",
         body: formData,
         credentials: "include",
-        // headers: {
-        //   Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg`,
-        //   cookie: `accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzMxNjAyMH0.fd61ct7VmoE3LPkddZR5mUza2yh68qgAkNiF7qbF_Sg; refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTkzYTI5NDEyNTdjZjU5ZWM3MDRhMWEiLCJpYXQiOjE2MzcyMjk2MjAsImV4cCI6MTYzNzgzNDQyMH0.0vnJrJBd-QMKCkeJbgFDNQ6nFrarMI1PpE3w9dAX_iI`,
-        // },
       });
       if (response.ok) {
         const imageUploadResponse = await response.json();
@@ -86,6 +83,22 @@ const Main = () => {
     // } else {
     //   console.log("No image selected!");
     // }
+  };
+
+  const LogOut = async () => {
+    try {
+      let response = await fetch(`http://localhost:3003/users/session`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (response.ok) {
+        // const logOutRes = await response.json();
+        // console.log(logOutRes);
+        history.push("/Login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // useEffect(() => {
@@ -164,6 +177,9 @@ const Main = () => {
                   value="Hey there, I am using WhatsApp"
                   aria-describedby="basic-addon1"
                 />
+                <div className="input-heading">
+                  <Button onClick={LogOut}>Log Out</Button>
+                </div>
               </Row>
             </Col>
           </Row>
@@ -180,4 +196,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default withRouter(Main);

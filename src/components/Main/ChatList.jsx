@@ -2,28 +2,42 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setActiveChat } from "../../redux/actions/action.js";
-import tempChatExample from './TempChatExample.json'; // CHAT OBJECTS EXAMPLE
+import tempChatExample from "./TempChatExample.json"; // CHAT OBJECTS EXAMPLE
 
-const mapStateToProps=(state)=>({
+const mapStateToProps = (state) => ({
   chats: state.chats.list,
 });
-const mapDispatchToProps=(dispatch)=>(
-  {
-    selectChat:(id)=>{
-      dispatch(setActiveChat(id))
-  }
-})
+const mapDispatchToProps = (dispatch) => ({
+  selectChat: (id) => {
+    dispatch(setActiveChat(id));
+  },
+});
 
-const ChatList = ({selectChat}) => {
-
+const ChatList = ({ selectChat }) => {
   // STATE & useEffect FOR TESTING
-  const [chats, setChats] = useState();
-  const getFakeChats=()=>{
-    setChats(tempChatExample)
-  }
+  const [chats, setChats] = useState([]);
+  // const getFakeChats = () => {
+  //   setChats(tempChatExample);
+  // };
+
+  const getRealChats = async () => {
+    try {
+      let response = await fetch(`http://localhost:3003/chats`, {
+        credentials: "include",
+      });
+      if (response.ok) {
+        const chatsRes = await response.json();
+        console.log(chatsRes);
+        setChats(chatsRes);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getFakeChats()
-  },[]);//socket
+    getRealChats();
+  }, []); //socket
 
   // STARTING BY SINGLE-USER CHAT (NOT GROUP CHAT ALLOWED FOR NOW)
   return (
@@ -34,12 +48,10 @@ const ChatList = ({selectChat}) => {
       <h1>Chat List</h1>
       {chats &&
         chats.map((chat) => (
-          <Row
-          key={chat._id}
-          onClick={()=>selectChat(chat._id)}
-          >
+          <Row key={chat._id} onClick={() => selectChat(chat._id)}>
+            {console.log(chat)}
             <Col xs={2}>
-              {chat.members.length === 1 ? (
+              {chat.members && chat.members.length === 1 ? (
                 <img
                   src={chat.members[0].avatar}
                   alt="friend avatar"
@@ -76,4 +88,4 @@ const ChatList = ({selectChat}) => {
   );
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(ChatList);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);
