@@ -53,12 +53,14 @@
 
 .picIm {
   border-radius: 50%;
-  max-width: 1%;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
   height: auto;
 }
 
 .pic-height {
-  max-width: 100%;
+  max-width: 100px;
 }
 
 .picIm,

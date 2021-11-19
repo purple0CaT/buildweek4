@@ -135,7 +135,7 @@ const ChatList = ({ selectChat, chats }) => {
             <Col xs={2}>
               {chat.members && chat.members.length === 2 ? (
                 <img
-                  src={chat.members[0].avatar}
+                  src={chat.members[1].avatar}
                   alt="friend avatar"
                   className="rounded-circle"
                   style={{ height: 48 }}
@@ -152,17 +152,17 @@ const ChatList = ({ selectChat, chats }) => {
             <Col xs={8}>
               {chat.members && chat.members.length === 2 ? (
                 <p>
-                  <strong>{chat.members[0].username}</strong>
+                  <strong>{chat.members[1].username}</strong>
                 </p>
               ) : (
                 <p>
                   <strong>GROUP CHAT NAME</strong>
                 </p>
               )}
-              <p>{chat.history && chat.history.at(-1).content.text}</p>
+              {/* <p>{chat.history && chat.history.at(-1).content.text}</p> */}
             </Col>
             <Col xs={2}>
-              <p>{chat.history && chat.history.at(-1).timestamp}</p>
+              {/* <p>{chat.history && chat.history.at(-1).timestamp}</p> */}
             </Col>
           </Row>
         ))}
