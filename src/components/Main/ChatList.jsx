@@ -80,8 +80,8 @@ const ChatList = ({ selectChat }) => {
       );
       if (response.ok) {
         const newChatRes = await response.json();
-        console.log(newChatRes);
-        dispatch(setChats(newChatRes));
+        // console.log(allChats);
+        dispatch(setChats(newChatRes.allChats));
         // setSearchUsers(usersRes);
       }
     } catch (error) {
@@ -168,14 +168,14 @@ const ChatList = ({ selectChat }) => {
                 </p>
               )}
               <p className="m-0">
-                {chat.history && chat.history.at(-1).content.text}
+                {/* {chat.history && chat.history.at(-1).content.text} */}
               </p>
             </Col>
             <Col xs={2}>
               <p className="m-0">
-                {console.log(chat.history.at(-1))}
-                {chat.history &&
-                  dateformat(chat.history.at(-1).createdAt, "HH:MM")}
+                {console.log("Chat history!",chat.history[1])}
+                {/* {chat.history &&
+                  dateformat(chat.history[-1].createdAt, "HH:MM")} */}
               </p>
             </Col>
           </Row>

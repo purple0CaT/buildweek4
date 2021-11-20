@@ -76,7 +76,7 @@ const Main = ({ history }) => {
       if (response.ok) {
         // const logOutRes = await response.json();
         // console.log(logOutRes);
-        history.push("/Login");
+        history.push("/");
       }
     } catch (error) {
       console.log(error);
@@ -85,7 +85,7 @@ const Main = ({ history }) => {
 
   useEffect(() => {
     if (profile._id === "") {
-      history.push("/login");
+      history.push("/");
     }
   }, []);
 
