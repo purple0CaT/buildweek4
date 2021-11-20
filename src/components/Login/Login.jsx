@@ -31,14 +31,17 @@ const Login = ({ history }) => {
   const login = async () => {
     const obj = { email, password };
     try {
-      let response = await fetch(`http://localhost:3003/users/session`, {
-        method: "POST",
-        body: JSON.stringify(obj),
-        credentials: "include",
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-        // Set-Cookie: true
-      });
+      let response = await fetch(
+        `${process.env.REACT_APP_FETCHURL}/users/session`,
+        {
+          method: "POST",
+          body: JSON.stringify(obj),
+          credentials: "include",
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+          // Set-Cookie: true
+        }
+      );
       // console.log(response);
       // console.log(response.headers.get("set-cookie"));
 
