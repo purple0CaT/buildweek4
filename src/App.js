@@ -13,7 +13,7 @@ function App() {
   // }, []);
   return (
     <Router>
-      <Route path="/Login" exact component={Login} />
+      <Route path="/" exact component={Login} />
       <Route path="/Register" exact component={Register} />
       <Route path="/Main/:id" component={Main} />
     </Router>
